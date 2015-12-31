@@ -4,7 +4,7 @@ RSpec.describe Recipe do
 	
 	it "recipe should be valid" do
 		recipe = Recipe.new( name: "chicken parm", summary: "this is the best chicken parm recipe ever",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes", chef_id: 1) 
 		expect(recipe.valid?).to be_truthy
 	end
 	
@@ -21,6 +21,13 @@ RSpec.describe Recipe do
 	
 	it "name size should between 5 and 100 characters" do
 		recipe = Recipe.new(name: "Chic", summary: "this is the best chicken parm recipe ever",
+		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+		expect(recipe.valid?).to be_falsey
+	end
+	
+	it "name size should between 5 and 100 characters" do
+		name = "a" * 101
+		recipe = Recipe.new(name: name, summary: "this is the best chicken parm recipe ever",
 		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
 		expect(recipe.valid?).to be_falsey
 	end
@@ -48,4 +55,5 @@ RSpec.describe Recipe do
 		description: "onion and chicken")
 		expect(recipe.valid?).to be_falsey
 	end
+	
 end
