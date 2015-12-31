@@ -3,56 +3,48 @@ require 'rails_helper'
 RSpec.describe Recipe do
 	
 	it "recipe should be valid" do
-		recipe = Recipe.new( name: "chicken parm", summary: "this is the best chicken parm recipe ever",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes", chef_id: 1) 
+		recipe = FactoryGirl.build_stubbed(:recipe) 
 		expect(recipe.valid?).to be_truthy
 	end
 	
 	it "recipe should be not valid" do
-		recipe = Recipe.new 
+		recipe = FactoryGirl.build(:recipe, name: "", summary: "", description: "", chef_id: nil) 
 		expect(recipe.valid?).to be_falsey
 	end
 	
 	it "name should be present" do
-		recipe = Recipe.new(name: " ", summary: "this is the best chicken parm recipe ever",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+		recipe = FactoryGirl.build(:recipe, name: " ") 
 		expect(recipe.valid?).to be_falsey
 	end
 	
-	it "name size should between 5 and 100 characters" do
-		recipe = Recipe.new(name: "Chic", summary: "this is the best chicken parm recipe ever",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+	it "name size should have more than 5 characters" do
+		recipe = FactoryGirl.build(:recipe, name: "Chic") 
 		expect(recipe.valid?).to be_falsey
 	end
 	
-	it "name size should between 5 and 100 characters" do
+	it "name size should less than 100 characters" do
 		name = "a" * 101
-		recipe = Recipe.new(name: name, summary: "this is the best chicken parm recipe ever",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+		recipe = FactoryGirl.build(:recipe, name: name) 
 		expect(recipe.valid?).to be_falsey
 	end
 	
 	it "summary should be present" do
-		recipe = Recipe.new(name: "Chicken Cesar", summary: " ",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+		recipe = FactoryGirl.build(:recipe, summary: " ")
 		expect(recipe.valid?).to be_falsey
 	end
 	
-	it "summary should be grater than 10" do
-		recipe = Recipe.new(name: "Chicken Cesar", summary: "Chicken",
-		description: "heat oil, add onions, add tomato sauce, add chicken, cook for 20 minutes") 
+	it "summary should be greater than 10" do
+		recipe = FactoryGirl.build(:recipe, summary: "Chicken")
 		expect(recipe.valid?).to be_falsey
 	end
 	
 	it "description should be present" do
-		recipe = Recipe.new(name: "Chicken Cesar", summary: "this is the best chicken parm recipe ever",
-		description: " ")
+		recipe = FactoryGirl.build(:recipe, description: " ")
 		expect(recipe.valid?).to be_falsey
 	end
 	
 	it "description size should be greater than 20" do
-		recipe = Recipe.new(name: "Chicken Cesar", summary: "this is the best chicken parm recipe ever",
-		description: "onion and chicken")
+		recipe = FactoryGirl.build(:recipe, description: "onion and chicken")
 		expect(recipe.valid?).to be_falsey
 	end
 	
