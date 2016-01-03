@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Chef do
         
-	it "should be not valid without a name" do
+	it "is invalid without a name" do
   	chef = FactoryGirl.build(:chef , chefname: " ") 
     expect(chef.valid?).to be_falsey
 	end
   
-  it "chef name should be greater 3 and less than 40 character" do
+  it "name should be greater 3 and less than 40 character" do
   	chef = FactoryGirl.build(:chef , chefname: "Ca")
   	expect(chef.valid?).to be_falsey
   end
